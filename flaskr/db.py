@@ -1,8 +1,6 @@
 import sqlite3
-
 import click
 from flask import current_app, g
-
 
 def get_db():
     if 'db' not in g:
@@ -14,13 +12,12 @@ def get_db():
 
     return g.db
 
-
 def close_db(e=None):
     db = g.pop('db', None)
 
     if db is not None:
         db.close()
-        
+       
 def init_db():
     db = get_db()
 

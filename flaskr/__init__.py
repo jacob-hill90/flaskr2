@@ -1,15 +1,16 @@
 import os
-
-from flask import Flask
-
+from flask import Flask, send_from_directory
+from flask_cors import CORS
 
 def create_app(test_config=None):
+
     # create and configure the app
     app = Flask(__name__, instance_relative_config=True)
     app.config.from_mapping(
         SECRET_KEY='dev',
         DATABASE=os.path.join(app.instance_path, 'flaskr.sqlite'),
     )
+    CORS(app)
 
     if test_config is None:
         # load the instance config, if it exists, when not testing
@@ -23,11 +24,18 @@ def create_app(test_config=None):
         os.makedirs(app.instance_path)
     except OSError:
         pass
-
-    # a simple page that says hello
-    @app.route('/hello')
-    def hello():
-        return 'Hello, World!'
+    
+    @app.route("/", methods=['GET'])
+    def index():
+        return send_from_directory('static', 'index.html')
+    
+    @app.route("/signup", methods=['POST', 'GET'])
+    def signup():
+        return send_from_directory('static', 'index.html')
+    
+    @app.route("/<path:path>")
+    def static_file(path):
+        return app.send_static_file(path)
     
     from . import db
     db.init_app(app)
