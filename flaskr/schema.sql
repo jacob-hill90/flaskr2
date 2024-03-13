@@ -5,12 +5,10 @@ CREATE TABLE user (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   first_name TEXT NOT NULL,
   last_name TEXT NOT NULL,
-  username TEXT UNIQUE NOT NULL,
-  password TEXT NOT NULL,
-  confirm_password TEXT NOT NULL,
-  zipcode TEXT,
   state TEXT,
-  email TEXT UNIQUE NOT NULL
+  zipcode TEXT,
+  username TEXT UNIQUE NOT NULL,
+  password TEXT NOT NULL
 );
 
 CREATE TABLE post (
